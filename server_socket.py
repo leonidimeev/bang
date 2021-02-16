@@ -9,5 +9,5 @@ s.bind(('0.0.0.0', 80))
 # bind the socket to a public host, and a well-known port
 # s.bind((socket.gethostname(), 80))
 while True:
-	message = s.recv(128)
-	print(message)
+    message = s.recv(128)
+    print(message)
