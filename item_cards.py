@@ -60,8 +60,9 @@ class Barrel:
 		player.equipment[4] == initial_card
 		player.cards.remove(initial_card)
 	@staticmethod
-	def barrel_drop(player):
+	def barrel_drop(player, drop):
 		player.with_barrel == False
+		classes.Drop().player_drop_a_card(player, drop, player.equipment[4])
 	@staticmethod
 	def barrel_check(player, deck, drop, type = 'check'):
 		action_cards.Action().checking(player, deck, drop, type = 'check')
@@ -73,4 +74,3 @@ class Barrel:
 
 
 
-		

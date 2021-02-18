@@ -1,15 +1,16 @@
 
 class PersonCard:
-    def __init__(self, name, description, note, health, ability):
+    def __init__(self, id, name, description, note, health):
+        self.id = id
         self.name = name
         self.description = description
         self.note = note
         self.health = health
-        self.ability = ability
+        #self.ability = ability
     def get_health(self):
         return self.health
-    def get_ability(self):
-    	return self.ability
+    # def get_ability(self):
+    # 	return self.ability
 
 class RoleCard:
     def __init__(self, role):
@@ -24,13 +25,13 @@ class Player:
         self.sit = sit
         self.person = person
         self.role = role
-        self.health = person.get_health()
+        self.health = int(person.get_health())
         self.range = 1
         self.shooted = False
         if (self.role == 'Sheriff'):
             self.health += 1
         self.remoteness = 0
-        self.ability = person.get_ability()
+        #self.ability = person.get_ability()
         self.in_jail = False
         self.with_dynamite = False
         self.dynamite_just_putted = False
@@ -41,8 +42,35 @@ class Player:
         # 0 - dynamite 1 - weapon 2 - aim 3 - mustang 4 - barrel 5 - jail
         self.equipment = [None, None, None, None, None, None]
 
-    def becomes_dead(self):
-        pass
+    def move(self):   
+        while True:
+            print('You have:', [card.name for card in self.cards])
+            command = input('What do you want to do? >>> ')
+            if command in [card.name for card in self.cards]:
+                for card in self.cards:
+                    if card.name == command:
+                        self.playing_card(card)
+                        self.cards.pop(self.cards.index(card))
+                        break
+            elif command == 'end':
+                if len(self.cards) <= self.health:
+                    break
+                else:
+                    print('You have more cards on hand then health, drop some cards.')
+            elif command.startswith('drop'):
+                command = command.split(' ')[1:]
+                for card in self.cards:
+                    if card.name in command:
+                        Drop().player_drop_a_card(player, drop, card)
+                        command.pop(command.index(card.name))
+            else:
+                try:
+                    command = int(command)
+                    self.playing_card(self.cards[command])
+                    Drop().player_drop_a_card(player, drop, card)
+                except ValueError:
+                    pass
+
 
 class Card:
     def __init__(self, id, name, suit, weight):

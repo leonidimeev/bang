@@ -24,7 +24,7 @@ class Action:
 		if (target.health < 1):
 			Beer().beer_saving(target)
 		else:
-			pass
+			becomes_dead(player)
 	def yes_or_no():
 		answer = input('y/n')
 		if answer == 'y':
@@ -38,11 +38,14 @@ class Action:
 			return players[0]
 	def checking(player, deck, drop, type = 'check'):
 		from classes import get_a_card
-		checked_card = get_a_card(player, deck, drop, type)
-		if checked_card.suit == 'hearth':
+		if get_a_card(player, deck, drop, type='check'):
 			return True
 		else:
 			return False
+	def becomes_dead(players, player):
+		players.remove(player)
+		for card in player.cards:
+			classes.Drop().player_drop_a_card(player, drop, card)
 	
 class Bang:
 	@staticmethod
@@ -76,7 +79,6 @@ class Bang:
 			return False
 	@staticmethod
 	def bang(players, shooter, target):
-		
 		if shooter.shooted == False:
 			Action().shoot(shooter, target)
 			if shooter.equipment[1].name != 'volcanic':
@@ -179,9 +181,12 @@ class Duel:
 				loses_in_duel(duelists[i])
 
 	def asking_for_bang(player, drop):
-		print('whether the ' + str(duelist_1.name) + ' will throw a card?')
-		if Action().yes_or_no():
-			classes.Drop().player_drop_a_card(player, drop, Bang().find(player.cards))
+		if Bang().find(player.cards):
+			print('whether the ' + str(duelist_1.name) + ' will throw a card?')
+			if Action().yes_or_no():
+				classes.Drop().player_drop_a_card(player, drop, Bang().find(player.cards))
+			else:
+				loses_in_duel(player)
 		else:
 			loses_in_duel(player)
 	def loses_in_duel(player):
@@ -252,8 +257,11 @@ class Jail:
 			player.equipment[5] == initial_card
 		else:
 			print('we cannot put sheriff in jail')
-	def jail_check():
-		pass
+	def jail_check(player, deck, drop):
+		if Action().checking(player, deck, drop, type = 'check'):
+			return True
+		else:
+			return False
 
 
 
