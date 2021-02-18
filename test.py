@@ -1,12 +1,14 @@
 import classes
-import json
 import action_cards
+import item_cards
+
+import json
+from collections import namedtuple
 
 deck = classes.Deck()
 drop = classes.Drop()
 
 roles_path = 'RoleCards.json'
 with open(roles_path, 'r') as f:
-	data = json.loads(f.read())
-	for x in data['Persons']:
-		print(x['name'])
+	data = f.read()
+persons = json.loads(data, object_hook = lambda d : namedtuple('X', d.keys())(*d.values()))

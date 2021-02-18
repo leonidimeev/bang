@@ -10,7 +10,7 @@ class Action:
 			else:
 				if Miss().miss_detect(target):
 					if Miss().will_player_throw_a_miss():
-
+						Miss().miss_throw(target, drop)
 				target.health -= 1
 		else:
 			if Miss().miss_detect(target):
@@ -41,7 +41,7 @@ class Action:
 		checked_card = get_a_card(player, deck, drop, type)
 		if checked_card.suit == 'hearth':
 			return True
-		else
+		else:
 			return False
 	
 class Bang:
@@ -51,8 +51,8 @@ class Bang:
 			if card.name == 'bang':
 				return card
 	@staticmethod
-	def can_he_shoot(players, shooter, target)
-		if shooter.sit > target.sit
+	def can_he_shoot(players, shooter, target):
+		if shooter.sit > target.sit:
 			left_sit = target.sit
 			dexter_sit = shooter.sit
 		else:
@@ -119,8 +119,9 @@ class Dynamite:
 				Action().next_player(players, player).with_dynamite == True
 				player.with_dynamite == False
 			else:
+				dynamite_explosion(player)
 
-	def dynamite_exposion(player):
+	def dynamite_explosion(player):
 		classes.Drop().drop_the_card(drop, player.equipment[0])
 		player.health -= 3
 		
@@ -178,7 +179,7 @@ class Duel:
 				loses_in_duel(duelists[i])
 
 	def asking_for_bang(player, drop):
-		print('whether the 'str(duelist_1.name) + ' will throw a card?')
+		print('whether the ' + str(duelist_1.name) + ' will throw a card?')
 		if Action().yes_or_no():
 			classes.Drop().player_drop_a_card(player, drop, Bang().find(player.cards))
 		else:
@@ -208,7 +209,7 @@ class Shop:
 			print(card.name)
 		current_player = player
 		for i in range(count):
-			print('which card 'str(current_player) + ' will choose?')
+			print('which card ' + str(current_player) + ' will choose?')
 			choise = int(input(' 0 - 6 --> '))
 			current_player.cards.append(shop_cards[choise])
 			current_player = Action().next_player(players, current_player)
@@ -224,7 +225,7 @@ class Indians:
 		classes.Drop.player_drop_a_card(player, drop, find(player.cards))
 		for p in players:
 			if p!=player:
-				print('whether the 'str(p.name) + ' will throw a bang card?')
+				print('whether the ' + str(p.name) + ' will throw a bang card?')
 				if Action().yes_or_no():
 					classes.Drop().player_drop_a_card(player, drop, Bang().find(player.cards))
 				else:
