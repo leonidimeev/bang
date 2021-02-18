@@ -31,13 +31,13 @@ class PersonCard:
     def get_ability(self):
     	return self.ability
 
-def angel_eye:
+def angel_eye():
 	pass
 	# player.rangeofshot += 1
-def tuko_damaged:
+def tuko_damaged():
 	pass
 	# tyanet kartu 
-def lucky:
+def lucky():
 	pass
 	# tyanet dve karty pri proverke
 
@@ -45,7 +45,7 @@ class RoleCard:
     def __init__(self, role):
         self.role = role
 
-def Sheriff:
+def Sheriff():
 	pass
 
 
