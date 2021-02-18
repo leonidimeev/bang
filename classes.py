@@ -1,12 +1,4 @@
 
-def Volkanik():
-	# Player.number of shots += 100000
-	pass
-
-def Vinchester():
-	# Player.rangeofshot += 5
-	pass 
-
 class PersonCard:
     def __init__(self, name, description, note, health, ability):
         self.name = name
@@ -28,12 +20,13 @@ def Sheriff():
 
 
 class Player:
-    def __init__(self, person, role):
+    def __init__(self, sit, person, role):
+        self.sit = sit
         self.person = person
         self.role = role
         self.health = person.get_health()
         self.range = 1
-        self.shots = 1
+        self.shooted = False
         if (self.role == 'Sheriff'):
             self.health += 1
         self.remoteness = 0
@@ -45,6 +38,8 @@ class Player:
         self.with_mustang = False
         self.with_aim = False
         self.cards = []
+        # 0 - dynamite 1 - weapon 2 - aim 3 - mustang 4 - barrel 5 - jail
+        self.equipment = [None, None, None, None, None, None]
 
     def becomes_dead(self):
         pass
@@ -79,11 +74,39 @@ class Deck:
         return deck
 
     @staticmethod
-    def get_a_card(player, deck):
+    def get_a_card(player, deck, drop, type):
         from random import randint
         randint = randint(0,deck.count - 1)
-        player.cards.append(deck.card[randint])
+        if type == 'check':
+            if deck.card[randint].suit == 'hearth':
+                return True
+            else:
+                return False
+            Drop().drop_the_card(drop, deck.card[randint])
+        elif type == 'default':
+            player.cards.append(deck.card[randint])
+        elif type == 'shop':
+            return deck.card[randint]
         del deck.card[randint]
+
+class Drop:
+    @classmethod
+    def __init__(self, count = 0):
+        self.count = count
+        self.card = []
+
+    @staticmethod
+    def drop_the_card(drop, card):
+        drop.card.append(card)
+        drop.count += 1
+
+    @classmethod
+    def player_drop_a_card(player, drop, card):
+        player.cards.remove(card)
+        drop_the_card(drop, card)
+
+
+
 
 
 
